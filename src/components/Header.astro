@@ -1,0 +1,20 @@
+---
+
+import {Image} from 'astro:assets';
+import ramble_logo from '../assets/ramble_logo.svg';
+---
+
+<header class="mainHeader">
+    <Image src={ramble_logo} alt={"Ramble logo"} class="mainHeader_Logo"> </Image> 
+
+    <nav class="mainHeader_Nav">
+        <a href="" class="nav_Link">Inicio</a>
+        <a href="" class="nav_Link">Guías</a>
+        <a href="" class="nav_Link">Blog</a>
+        <a href="" class="nav_Link">Tienda</a>
+        <a href="" class="nav_Link">FAQ</a>
+    </nav>
+
+    <button class="mainHeader_PlayButton">JUGAR</button>
+</header>
+

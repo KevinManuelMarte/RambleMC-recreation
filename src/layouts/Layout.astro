@@ -1,0 +1,35 @@
+---
+interface Props {
+	title: string;
+}
+
+//Necessary componentes
+import Header from '../components/Header.astro';
+import Footer from "../components/Footer.astro";
+//Necessary componentes
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Sitio web oficial del servidor de Minecraft 'Ramble'" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+
+		<style>
+			@import "/styles.scss";
+		</style>
+	</head>
+	<body>
+	<Header></Header>
+	<main>
+		<slot />
+	</main>
+	<!-- <Footer></Footer> -->
+	</body>
+</html>

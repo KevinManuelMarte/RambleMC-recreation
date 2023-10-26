@@ -1,0 +1,40 @@
+.mainHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: clamp(35px, 7vmin, 200px);
+    padding-top: clamp(15px, 2vmin, 150px);;
+    padding-bottom: clamp(15px, 2vmin, 150px);;
+}
+
+.mainHeader_PlayButton {
+    cursor: pointer;
+    transition: 0.2s all ease;
+    color: white;
+    font-family: $titleAndButtonsFont;
+    background-color: $base03;
+    border: none;
+    padding: clamp(10px, 1vmin, 35px) clamp(20px, 3vmin, 70px);
+    font-size: clamp(12px, 1.5vmin, 70px);
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.mainHeader_PlayButton:hover {
+    transition: 0.2s all ease;
+    filter: brightness(80%);
+}
+
+.mainHeader_Nav {
+    display: flex;
+    justify-content: space-between;
+    gap: clamp(15px, 6vmin, 80px);
+}
+
+.mainHeader_Logo {
+    width: clamp(50px, 5%, 170px);
+    height: clamp(50px, 10%, 170px);
+}
