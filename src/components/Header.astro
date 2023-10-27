@@ -1,20 +1,44 @@
 ---
+interface Props {
+    ActivePage:string;
+}
 
 import {Image} from 'astro:assets';
 import ramble_logo from '../assets/ramble_logo.svg';
+
+const { ActivePage } = Astro.props;
 ---
 
 <header class="mainHeader">
     <Image src={ramble_logo} alt={"Ramble logo"} class="mainHeader_Logo"> </Image> 
 
+    <!--The button to open the menu for mobile users -->
+    <button class="mainHeader_MobileButton">MENU</button>
+
     <nav class="mainHeader_Nav">
-        <a href="" class="nav_Link">Inicio</a>
-        <a href="" class="nav_Link">Guías</a>
-        <a href="" class="nav_Link">Blog</a>
-        <a href="" class="nav_Link">Tienda</a>
-        <a href="" class="nav_Link">FAQ</a>
+        <a href="" class=`nav_Link ${ActivePage == 'home' ? 'nav_Link_Active' : 'nav_Link' }`>Inicio</a>
+        <a href="" class=`nav_Link {ActivePage == 'guide' ? 'nav_Link_Active' : 'nav_Link' }`>Guías</a>
+        <a href="" class=`nav_Link {ActivePage == 'blog' ? 'nav_Link_Active' : 'nav_Link' }`>Blog</a>
+        <a href="" class=`nav_Link {ActivePage == 'shop' ? 'nav_Link_Active' : 'nav_Link' }`>Tienda</a>
+        <a href="" class=`nav_Link {ActivePage == 'faq' ? 'nav_Link_Active' : 'nav_Link' }`>FAQ</a>
     </nav>
 
     <button class="mainHeader_PlayButton">JUGAR</button>
 </header>
 
+
+<script>
+    const OpenMobileMenuButton = document.querySelector(".mainHeader_MobileButton");
+    const MainHeaderNav = document.querySelector(".mainHeader_Nav");
+
+    OpenMobileMenuButton?.addEventListener("click", ()=> { 
+        if (!MainHeaderNav?.classList.contains("mainHeader_Nav_MobileActive")){
+            OpenMobileMenuButton.classList.add("mainHeader_MobileButton_Active")
+            MainHeaderNav?.classList.add("mainHeader_Nav_MobileActive");
+        } 
+        else {
+            OpenMobileMenuButton.classList.remove("mainHeader_MobileButton_Active")
+            MainHeaderNav?.classList.remove("mainHeader_Nav_MobileActive");
+        } 
+    })
+</script>

@@ -6,6 +6,10 @@
     font-family: $paragraphAndOthersFont;
 }
 
+.nav_Link_Active{
+    color: $base03;
+}
+
 .nav_Link:hover{
     filter: brightness(80%);
     transition: 0.2s all ease;

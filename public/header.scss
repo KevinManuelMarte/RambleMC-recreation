@@ -1,11 +1,12 @@
 .mainHeader {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    padding: clamp(35px, 7vmin, 200px);
-    padding-top: clamp(15px, 2vmin, 150px);;
-    padding-bottom: clamp(15px, 2vmin, 150px);;
+    padding: clamp(10px, 7vmin, 200px);
+    padding-top: clamp(5px, 2vmin, 150px);;
+    padding-bottom: clamp(5px, 2vmin, 150px);;
 }
 
 .mainHeader_PlayButton {
@@ -28,13 +29,71 @@
     filter: brightness(80%);
 }
 
+.mainHeader_MobileButton {
+    display: none;
+    transition: 0.2s all ease;
+    padding: clamp(5px, 1vmin, 35px) clamp(10px, 3vmin, 70px);
+    color: white;
+    font-size: clamp(12px, 1.5vmin, 70px);
+    font-family: $titleAndButtonsFont;
+    background-color: $base01;
+    border: rgb(19, 19, 19) 0.3vmin solid ;
+}
+
+.mainHeader_MobileButton_Active {
+    border-color: $base03;
+}
+
 .mainHeader_Nav {
     display: flex;
     justify-content: space-between;
     gap: clamp(15px, 6vmin, 80px);
+    overflow: hidden;
 }
 
 .mainHeader_Logo {
     width: clamp(50px, 5%, 170px);
     height: clamp(50px, 10%, 170px);
+}
+
+
+@media screen and (max-width: $mobileResolution) {
+    .mainHeader {
+        border-bottom: $base01 0.5vmin solid;
+    }
+
+
+    .mainHeader_Nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition: 0.2s all ease;
+        position: absolute;
+        top: 100%;
+        left: 0%;
+        width: 100%;
+        height: 0px;
+        opacity: 0%;
+        gap: 0;
+    }
+
+    .mainHeader_Nav_MobileActive {
+        transition: 0.2s all ease;
+        height: auto;
+        opacity: 100%;
+    }
+
+    .mainHeader_Nav .nav_Link {
+        padding: 2vmin;
+        background-color: $base01;
+        border-bottom: 0.3vmin solid $base00;
+    }
+
+    .mainHeader_Nav .nav_Link_Active {
+        border-color: $base03;
+    }
+
+    .mainHeader_MobileButton {
+        display: block;
+    }
 }
