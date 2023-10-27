@@ -1,0 +1,48 @@
+@use "../colors.scss" as *;
+@use "../fonts.scss" as *;
+@use "../resolutions.scss" as resolution;
+
+.homepage_WelcomeSection {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: clamp(250px, 90vh, 800px);
+    width: 100%;
+    box-shadow: inset 0px 0px clamp(50px, 10vmin, 80px) clamp(10px, 2vmin, 100px) $base00;
+    margin: 0 auto;
+    margin-bottom: 120px;
+}
+
+.homepage_WelcomeSection .section_Background {
+    border: 2vmin solid transparent;
+}
+
+.homepage_WelcomeSubSection_Padding {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 2vmin, 20px);
+    margin: clamp(10px, 15vmin, 180px);
+    margin-top: clamp(40px, 10vmin, 100px);
+}
+
+.homepage_CardsContainer {
+    --auto-grid-min-size: clamp(20px, 60vmin, 390px);
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 30px));
+    grid-gap: 1rem;
+    margin: clamp(25px, 2vmin, 20px);
+}
+
+@media screen and (min-width: 1800px) {
+    .homepage_CardsContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: clamp(25px, 2vmin, 20px) auto;
+        width: 80%;
+    }
+}

@@ -1,7 +1,34 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+
+//importing the background image for the "WELCOME" background
+import minecraft_Wallpaper from '../assets/homepage/minecraft_Wallpaper.png';
+//importing the background image for the "WELCOME" background
 ---
 
 <Layout Title="Ramble" Page='home'>
+
+    <section class="homepage_WelcomeSection">
+        <Image class="section_Background section_Background_InnerShadow" src={minecraft_Wallpaper} alt='Imagen de fondo de la sección de bienvenida'></Image>
+        <section class="homepage_WelcomeSubSection_Padding">
+            <h2 class="section_Title">¡BIENVENIDO A RAMBLE!</h2>
+            <p class="section_Paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi et atque incidunt officia? Ipsa cum repellendus 
+                aliquid deserunt expedita ratione quas laudantium maiores laboriosam quod. Molestias earum quod aperiam fuga?</p>
+        </section>
+    </section>
+
+    <section class="center">
+
+        <h2 class="section_Title center">ULTIMAS NOTICIAS Y EVENTOS</h2>
+        <p class="section_Paragraph center">¡Descubre las ultimas noticias y eventos de Ramble!</p>
+        <div class="homepage_CardsContainer">
+            <Card></Card> <Card></Card> <Card></Card>
+        </div>
+        <button class="section_Button center">VER TODO</button>
+    
+    </section>
+
 </Layout>
 

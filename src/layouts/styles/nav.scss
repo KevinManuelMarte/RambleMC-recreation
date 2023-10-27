@@ -1,8 +1,11 @@
+@use "colors.scss" as *;
+@use "fonts.scss" as *;
+
 .nav_Link {
     color: white;
     transition: 0.2s all ease;
     text-decoration: none;
-    font-size: clamp(10px, 2.3vmin, 60px);
+    font-size: clamp(10px, 2.3vmin, 30px);
     font-family: $paragraphAndOthersFont;
 }
 

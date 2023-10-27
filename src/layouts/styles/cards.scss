@@ -1,0 +1,68 @@
+@use "colors.scss" as *;
+@use "fonts.scss" as *;
+@use "resolutions.scss" as resolution;
+
+.section_Card {
+    cursor: pointer;
+    transition: 0.2s all ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-self: center;
+    padding-bottom: clamp(10px, 2vmin, 20px);
+    background-color: $base01;
+    border-radius: clamp(20px, 2vmin, 20px);
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+}
+
+.section_Card:hover {
+    transition: 0.2s all ease;
+    filter: brightness(80%);
+}
+
+.card_Image {
+    transition: 0.2s all ease;
+    border-top-right-radius: clamp(10px, 2vmin, 20px);
+    border-top-left-radius: clamp(10px, 2vmin, 20px);
+    width: 100%;
+}
+
+.card_Details {
+    font-family: $paragraphAndOthersFont;
+    font-size: clamp(3px, 2.2vmin, 17px);
+    margin: clamp(5px, 1vmin, 10px);
+    margin-top: clamp(10px, 2vmin, 20px);
+    color: $base04;
+}
+
+.card_Title {
+    color: white;
+    font-family: $paragraphAndOthersFont;
+    font-size: clamp(16px, 2vmin, 25px);
+    margin: clamp(5px, 1vmin, 10px);
+    margin-top: 0.2vmin;
+}
+
+.card_Description {
+    color: #B9B9BF;
+    margin: clamp(5px, 1vmin, 10px);
+    margin-top: 0;
+    font-family: $paragraphAndOthersFont;
+    font-size: clamp(8px, 2vmin, 17px);
+}
+
+@media screen and (max-width: resolution.$mobileResolution){
+    .card_Image {
+        transition: 0.2s all ease;
+        height: 150px;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .card_Image {
+        transition: 0.2s all ease;
+        height: 350px;
+    }
+}

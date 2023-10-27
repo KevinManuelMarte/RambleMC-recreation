@@ -17,10 +17,10 @@ const { ActivePage } = Astro.props;
 
     <nav class="mainHeader_Nav">
         <a href="" class=`nav_Link ${ActivePage == 'home' ? 'nav_Link_Active' : 'nav_Link' }`>Inicio</a>
-        <a href="" class=`nav_Link {ActivePage == 'guide' ? 'nav_Link_Active' : 'nav_Link' }`>Guías</a>
-        <a href="" class=`nav_Link {ActivePage == 'blog' ? 'nav_Link_Active' : 'nav_Link' }`>Blog</a>
-        <a href="" class=`nav_Link {ActivePage == 'shop' ? 'nav_Link_Active' : 'nav_Link' }`>Tienda</a>
-        <a href="" class=`nav_Link {ActivePage == 'faq' ? 'nav_Link_Active' : 'nav_Link' }`>FAQ</a>
+        <a href="" class=`nav_Link ${ActivePage == 'guide' ? 'nav_Link_Active' : 'nav_Link' }`>Guías</a>
+        <a href="" class=`nav_Link ${ActivePage == 'blog' ? 'nav_Link_Active' : 'nav_Link' }`>Blog</a>
+        <a href="" class=`nav_Link ${ActivePage == 'shop' ? 'nav_Link_Active' : 'nav_Link' }`>Tienda</a>
+        <a href="" class=`nav_Link ${ActivePage == 'faq' ? 'nav_Link_Active' : 'nav_Link' }`>FAQ</a>
     </nav>
 
     <button class="mainHeader_PlayButton">JUGAR</button>

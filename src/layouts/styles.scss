@@ -1,0 +1,55 @@
+
+@use "styles/fonts.scss" as *;
+@use "styles/colors.scss" as *;
+@use "styles/resolutions.scss" as *;
+@use "styles/header.scss" as *;
+@use "styles/nav.scss" as *;
+@use "styles/sections.scss" as *;
+@use "styles/specific_pages/homepage.scss" as *;
+@use "styles/cards.scss" as *;
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $base00;
+    max-width: 1900px;
+    margin: 0 auto !important;
+
+}
+
+.flex_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.center {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.section_Button {
+    cursor: pointer;
+    transition: 0.2s all ease;
+    color: white;
+    font-family: $titleAndButtonsFont;
+    background-color: $base03;
+    border: none;
+    padding: clamp(10px, 1vmin, 20px) clamp(20px, 3vmin, 30px);
+    font-size: clamp(12px, 1.5vmin, 20px);
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.section_Button:hover {
+    transition: 0.2s all ease;
+    filter: brightness(80%);
+}
