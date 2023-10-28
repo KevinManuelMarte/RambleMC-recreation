@@ -1,0 +1,33 @@
+@use "colors.scss" as *;
+@use "fonts.scss" as *;
+@use "resolutions.scss" as *;
+.mainFooter {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    border-top: 0.2vmin solid gray;
+    padding: clamp(10px, 7vmin, 200px);
+    padding-top: clamp(5px, 2vmin, 150px);;
+    padding-bottom: clamp(5px, 2vmin, 150px);;
+}
+
+.mainFooter_Title {
+    transition: 0.5s all ease;
+    color: gray;
+    font-family: $paragraphAndOthersFont;
+    font-size: clamp(8px, 2.7vmin, 40px);
+}
+
+.mainFooter_Nav {
+    display: flex;
+    justify-content: space-between;
+    gap: clamp(15px, 6vmin, 80px);
+    overflow: hidden;
+
+    .nav_Link {
+        color: gray
+        ;
+    }
+}

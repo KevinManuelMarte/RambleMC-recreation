@@ -22,7 +22,6 @@
 .homepage_WelcomeSubSection_Padding {
     display: flex;
     flex-direction: column;
-    gap: clamp(10px, 2vmin, 20px);
     margin: clamp(10px, 15vmin, 180px);
     margin-top: clamp(40px, 10vmin, 100px);
 }
@@ -32,10 +31,59 @@
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 30px));
-    grid-gap: 1rem;
-    margin: clamp(25px, 2vmin, 20px);
+    grid-gap: clamp(1rem, 4vmin, 3rem);
+    margin: clamp(12px, 2vmin, 20px) clamp(25px, 2vmin, 20px);
 }
 
+
+.homepage_TransitionSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(180deg, $base00 50%, $base02 50%);
+    height: auto;
+}
+
+.homepage_OrangeCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    border-radius: clamp(10px, 4vmin, 40px);
+    margin: clamp(5px, 10vmin, 80px);
+    padding: clamp(5px, 8vmin, 30px);
+    max-width: 1400px;
+    gap: clamp(5px, 2.5vmin, 30px);
+    background-image: url(src/assets/homepage/orange_card_background.png);
+    background-size: cover;
+    background-repeat: repeat;
+    background-color: $base03;
+}
+
+.homepage_LastSection {
+    padding: 30px 20vmin;
+    padding-bottom: 60px;
+    gap: clamp(10px, 2vmin, 15px);
+    .section_Button {
+        font-size: clamp(5px, 2vmin, 20px);
+        padding: clamp(5px, 2vmin, 20px) clamp(5px, 3vmin, 20px);
+        margin: 0 clamp(5px, 1vmin, 10px);
+    }
+}
+
+@media screen and (max-width: resolution.$mobileResolution) {
+    .homepage_OrangeCard {
+        display: flex;
+        text-align: left;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .homepage_WelcomeSection {
+        height: 350px;
+    }
+}
 @media screen and (min-width: 1800px) {
     .homepage_CardsContainer {
         display: flex;
@@ -44,5 +92,10 @@
         align-items: center;
         margin: clamp(25px, 2vmin, 20px) auto;
         width: 80%;
+    }
+
+    .homepage_OrangeCard {
+        margin-left: auto;
+        margin-right: auto;
     }
 }

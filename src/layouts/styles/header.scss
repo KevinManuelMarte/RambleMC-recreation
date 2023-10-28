@@ -63,6 +63,7 @@
 @media screen and (max-width: $mobileResolution) {
     .mainHeader {
         border-bottom: $base01 0.5vmin solid;
+        padding: clamp(5px, 1vmin, 35px) clamp(10px, 3vmin, 70px);
     }
 
 

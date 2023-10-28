@@ -12,7 +12,7 @@
     padding-bottom: clamp(10px, 2vmin, 20px);
     background-color: $base01;
     border-radius: clamp(20px, 2vmin, 20px);
-    margin: 0 auto;
+    margin: 10px auto;
     width: 100%;
     text-align: left;
 }
@@ -61,8 +61,10 @@
 }
 
 @media screen and (min-width: 1600px) {
+
     .card_Image {
         transition: 0.2s all ease;
-        height: 350px;
+        height: 250px;
+        width: 100%;
     }
 }
