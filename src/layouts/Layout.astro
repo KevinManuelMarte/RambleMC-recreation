@@ -24,6 +24,7 @@ import "./styles.scss";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<script src="https://kit.fontawesome.com/c595e5d06f.js" crossorigin="anonymous"></script>
+
 		<title>{Title}</title>
 	</head>
 	<body>
@@ -31,7 +32,7 @@ import "./styles.scss";
 	<main>
 		<slot />
 	</main>
-	<Footer></Footer>
+	<Footer ActivePage={Page}></Footer>
 	<!-- <Footer></Footer> -->
 	</body>
 </html>

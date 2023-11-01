@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+//Link de la página de Github del artículo donde el usuario podra para editar y enviar una petición de sus cambios (pull request) para ser aceptados | rechazados
+const LinkEditArticle:string = import.meta.env.PUBLIC_EDIT_RAMBLE_PP_LINK
+---
+
+<Layout Title="Ramble" Page='ramble_TOS'>
+
+    <article class="article">
+        <header class="article_Header">
+            <h2 class="article_Title" id="title">(Cargando...)</h2>
+            <div>
+                <strong class="article_Date" id="date">Actualizado por ultima vez el: (cargando...) (Si el artículo no carga, intenta denuevo mas tarde)</strong>
+                <a class="article_Warning" href=`${LinkEditArticle}`> ¿Algún error? Edita el artículo</a>
+            </div>
+        </header>
+
+        <main class="article_Content" id="ArticleContent">
+
+        </main>
+    </article>
+
+
+    <script>
+        import { marked } from 'marked';
+
+        let article:any = document.getElementById("ArticleContent");
+        const ArticleSource = import.meta.env.PUBLIC_RAMBLE_TOS_LINK;
+        fetch(`${ArticleSource}`)
+        .then(result => result.text())
+        .then(result =>  article.innerHTML += marked.parse(result))
+        .then(function(){
+            let parrafos = document.querySelectorAll("p");
+
+            parrafos.forEach((parrafo)=>{
+                parrafo.classList.add("section_Paragraph")
+                parrafo.classList.add("section_Text_Gray")
+
+            })
+
+            let headerData = document.querySelectorAll("h1");
+            let articleTitle:HTMLElement | any = document.getElementById("title");
+            let articleDate:HTMLElement | any = document.getElementById("date");
+
+            headerData.forEach((data)=>{ 
+                const HeaderDataObject = JSON.parse(`{${data.innerHTML}}`)
+
+                let title:any, date:any;
+
+                if (Object.hasOwn(HeaderDataObject, 'title')) {
+                    title = HeaderDataObject.title;
+                }
+                if (Object.hasOwn(HeaderDataObject, 'date')) {
+                    date = HeaderDataObject.date;
+                }
+
+                articleTitle.innerHTML = title;
+                articleDate.innerHTML = `Actualizado por ultima vez el: ${date}` ;
+                data.remove();
+            })
+        })
+    </script>
+</Layout>
+

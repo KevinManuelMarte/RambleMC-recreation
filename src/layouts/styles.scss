@@ -7,6 +7,7 @@
 @use "styles/sections.scss" as *;
 @use "styles/specific_pages/homepage.scss" as *;
 @use "styles/cards.scss" as *;
+@use "styles/specific_pages/articles.scss" as articles;
 
 * {
     padding: 0;
@@ -19,6 +20,10 @@ body {
     max-width: 1900px;
     margin: 0 auto !important;
 
+}
+
+main {
+    min-height: 100vh;
 }
 
 .flex_container {
@@ -38,4 +43,5 @@ body {
     align-items: center;
     margin: 0 auto;
 }
+
 

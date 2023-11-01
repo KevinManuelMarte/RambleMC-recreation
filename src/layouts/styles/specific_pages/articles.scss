@@ -1,0 +1,86 @@
+@use "../fonts.scss" as fonts;
+@use "../colors.scss" as colors;
+
+.article {
+    padding: clamp(30px, 8vmin, 80px);
+
+    .article_Header {
+        display: flex;
+        flex-direction: column;
+        .article_Title {
+            transition: 0.5s all ease;
+            color: gray;
+            margin-bottom: clamp(12px, 2vmin, 10px) !important;
+            font-family: fonts.$titleAndButtonsFont;
+            font-size: clamp(12px, 10vmin, 70px);
+        }
+    
+        .article_Date {
+            transition: 0.5s all ease;
+            color: gray;
+            margin-bottom: clamp(12px, 2vmin, 10px) !important;
+            font-family: fonts.$paragraphAndOthersFont;
+            font-size: clamp(12px, 5min, 40px);
+        }
+
+        .article_Warning {
+            color: colors.$base03;
+            transition: 0.2s all ease;
+            text-decoration: none;
+            font-size: clamp(10px, 2.3vmin, 30px);
+            font-family: fonts.$paragraphAndOthersFont;
+        }
+
+        .article_Warning:hover {
+            filter: brightness(80%);
+            transition: 0.2s all ease;
+        }
+    }
+
+    .article_Content {
+        h2 {
+            transition: 0.5s all ease;
+            color: gray;
+            margin-bottom: clamp(12px, 2vmin, 10px) !important;
+            font-family: fonts.$titleAndButtonsFont;
+            font-size: clamp(7px, 5vmin, 30px);
+        }
+    
+        p {
+            margin: clamp(10px, 1vmin, 20px);
+            line-height: 150%;
+            letter-spacing: 1.3px;
+        }
+        ol, ul {
+            display: flex;
+            flex-direction: column;
+            margin: clamp(10px, 1vmin, 20px);
+            gap: clamp(3px, 1vmin, 20px);
+            margin-left: clamp(10px, 1vmin, 20px);
+            list-style: square;
+            color: gray;
+    
+    
+            li {
+                margin: clamp(3px, 1vmin, 20px);
+                transition: 0.5s all ease;
+                color: gray;
+                font-family: fonts.$paragraphAndOthersFont;
+                font-size: clamp(8px, 2.7vmin, 20px);
+            }
+        }
+    
+        a {
+            color: colors.$base03;
+            transition: 0.2s all ease;
+            text-decoration: none;
+            font-size: clamp(10px, 2.3vmin, 30px);
+            font-family: fonts.$paragraphAndOthersFont;
+        }
+    
+        a:hover{
+            filter: brightness(80%);
+            transition: 0.2s all ease;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    //Estos son las opciones de las fuentes de los links de los que el sitio web saca la información para las secciones de 'Terminos de servicio'
+    //y "Politica de privacidad".
+
+    //These are the sources of the links that the website uses to get the data for the sections 'Terms of service' and 'Privacy policy'
+
+    "TOS_Link": "https://raw.githubusercontent.com/SociosDeLaCaverna/Ramble_Web_Informacion/main/ramble_TOS.md", //TOS = Terms Of Service | Terminos de servicio
+    "PP_Link": "https://raw.githubusercontent.com/SociosDeLaCaverna/Ramble_Web_Informacion/main/ramble_politica.md" // PP = Privacy Policy | Politica de privacidad
+}

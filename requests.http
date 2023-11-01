@@ -1,0 +1,5 @@
+//dd
+GET https://api.github.com/repos/KevinManuelMarte/CapuchasBot/issues
+
+//WEPA
+GET  https://api.github.com/repos/KevinManuelMarte/CapuchasBot/issues
