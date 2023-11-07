@@ -17,7 +17,7 @@
     transition: 0.5s all ease;
     color: gray;
     font-family: $paragraphAndOthersFont;
-    font-size: clamp(8px, 2.7vmin, 40px);
+    font-size: clamp(15px, 2.7vmin, 40px);
 }
 
 .mainFooter_Nav {
@@ -27,6 +27,7 @@
     overflow: hidden;
 
     .nav_Link {
+        font-size: clamp(11px, 2.7vmin, 40px);;
         color: gray
         ;
     }

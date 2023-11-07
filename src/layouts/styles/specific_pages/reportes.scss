@@ -1,0 +1,119 @@
+@use "../fonts.scss" as fonts;
+@use "../colors.scss" as colors;
+@use "../resolutions.scss" as resolutions;
+
+.contenedor_reportes {
+    display: none;
+}
+
+.visible {
+    display: flex !important;
+}
+
+.reporteAceptado {
+    background-color: rgba(58, 67, 44, 0.343) !important;
+    outline-color: rgb(14, 228, 14) !important;
+}
+
+.reporteRechazado {
+    background-color: rgba(255, 0, 0, 0.079) !important;
+    outline-color: red !important;
+}
+
+.reportes_Card_Boton {
+    border: 0.3vmin solid black;
+    border-radius: 0;
+    min-width: 150px;
+    transition: 0.5s all ease;
+    color: gray;
+    margin: clamp(10px, 1.4vmin, 35px);
+    padding: clamp(10px, 1.4vmin, 35px);
+    background-color: colors.$base02;
+}
+
+.reportes_Card_Boton_Activo {
+    color: white;
+    border-color: colors.$base03;
+}
+
+.reporteslol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(8px, 4vmin, 25px);
+
+
+    .botonSeleccionarContenedor {
+        transition: 0.5s all ease;
+        cursor: pointer;
+        font-family: fonts.$paragraphAndOthersFont;
+        padding: clamp(10px, 1.4vmin, 35px);;
+        margin: clamp(10px, 1.4vmin, 35px);
+        background-color: colors.$base01;
+        border: 0.3vmin solid black;
+    }
+
+    .botonSeleccionarContenedor:hover {
+        filter: brightness(80%);
+    }
+
+    .botonSeleccionarContenedor:focus {
+        outline: none;
+    }
+    .botonSeleccionarContenedor_Activo {
+        transition: 0.5s all ease;
+        color: white;
+        margin: clamp(10px, 1.4vmin, 35px);
+        background-color: colors.$base02;
+        border-color: colors.$base03;
+    }
+
+    div {
+        display: flex;
+        flex-direction: row;
+    }
+    .contenedor_reportes {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 90%;
+        gap: 2vmin;
+        margin-bottom: clamp(15px, 4vmin, 45px);
+    }
+    .reportes_Card {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        background-color: rgba(33, 33, 33, 0.305);
+        outline: 0.1vmin solid black;
+        width: 100%;
+        height: auto;
+        gap: 0.3vmin;
+        padding: 0 clamp(10px, 2vmin, 25px);
+        transition: 0.5s all ease;
+        color: gray;
+        font-weight:normal;
+        font-family: fonts.$paragraphAndOthersFont;
+        font-size: clamp(23px, 2.7vmin, 25px);
+    }
+    a {
+        color: colors.$base03;
+        transition: 0.2s all ease;
+        text-decoration: none;
+        font-family: fonts.$paragraphAndOthersFont;
+    }
+
+    a:hover{
+        filter: brightness(80%);
+        transition: 0.2s all ease;
+    }
+}
+
+.ReporteSeleccionado {
+    background-color: colors.$base01 !important;
+    outline-color: colors.$base03 !important;
+}

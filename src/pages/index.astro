@@ -3,18 +3,116 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 
+
 //importing the background image for the "WELCOME" background
 import minecraft_Wallpaper from '../assets/homepage/minecraft_Wallpaper.png';
-//importing the background image for the "WELCOME" background
-
 
 import orange_card_background from '../assets/homepage/orange_card_background.png';
+
 //importing Ramble's logo
 import ramble_logo from '../assets/ramble_logo.svg';
-//importing Ramble's logo
+
+import { getCollection } from 'astro:content';
+
+const Eventos = await getCollection('eventos');
+const Noticias = await getCollection('noticias');
+
+let CartasAMostrar:any[] = [];
+let CartasAgregadas:number = 0;
+const MaximaCantidadDeCartas:number = 2;
+
+
+if (Eventos && !Noticias) {
+    Eventos.sort((a:any, b:any) => {
+        a = new Date (a.data.dateToSort);
+        b = new Date (b.data.dateToSort);
+        return a - b;
+    })
+
+    Eventos.reverse();
+
+    Eventos.forEach((event) => {
+        if (CartasAgregadas >= 1) {
+            return;
+        }
+        CartasAgregadas++
+        const NewProperty = {link: "eventos/"};
+        const NewEvent = Object.assign(event, NewProperty)
+        CartasAMostrar.unshift(NewEvent)
+    })
+}
+else if (!Eventos && Noticias) {
+    Noticias.sort((a:any, b:any) => {
+        a = new Date (a.data.dateToSort);
+        b = new Date (b.data.dateToSort);
+        return a - b;
+    })
+
+    Noticias.reverse();
+
+    Noticias.forEach((Noticias) => {
+        if (CartasAgregadas >= 1) {
+            return;
+        }
+        CartasAgregadas++
+        const NewProperty = {link: "noticias/"};
+        const NewNew = Object.assign(Noticias, NewProperty)
+        CartasAMostrar.unshift(NewNew)
+    })
+}
+else if (Eventos && Noticias) {
+    Eventos.sort((a:any, b:any) => {
+        a = new Date (a.data.dateToSort);
+        b = new Date (b.data.dateToSort);
+        return a - b;
+    })
+
+    Eventos.reverse();
+
+    Noticias.sort((a:any, b:any) => {
+        a = new Date (a.data.dateToSort);
+        b = new Date (b.data.dateToSort);
+        return a - b;
+    })
+
+    Noticias.reverse();
+
+    Eventos.forEach((event) => {
+        if (CartasAgregadas >= 1) {
+            return;
+        }
+        CartasAgregadas++
+        const NewProperty = {link: "eventos/"};
+        const NewEvent = Object.assign(event, NewProperty)
+        return CartasAMostrar.unshift(NewEvent)
+    })
+    Noticias.forEach((Noticias) => {
+        if (CartasAgregadas >= MaximaCantidadDeCartas) {
+            return;
+        }
+        CartasAgregadas++
+        const NewProperty = {link: "noticias/"};
+        const NewNew = Object.assign(Noticias, NewProperty)
+        return CartasAMostrar.unshift(NewNew)
+    })
+
+}
+
+if (CartasAMostrar) {
+    CartasAMostrar.sort((a:any, b:any) => {
+        a = new Date (a.data.dateToSort);
+        b = new Date (b.data.dateToSort);
+        return a - b;
+    })
+
+    CartasAMostrar.reverse()
+}
+
+
+
 ---
 
-<Layout Title="Ramble" Page='home'>
+<Layout Title="Ramble" Pagina='inicio'>
 
     <section class="homepage_WelcomeSection">
         <Image class="section_Background section_Background_InnerShadow" src={minecraft_Wallpaper} alt='Imagen de fondo de la sección de bienvenida'></Image>
@@ -30,9 +128,14 @@ import ramble_logo from '../assets/ramble_logo.svg';
         <h2 class="section_Title center">ULTIMAS NOTICIAS Y EVENTOS</h2>
         <p class="section_Paragraph center">¡Descubre las ultimas noticias y eventos de Ramble!</p>
         <div class="homepage_CardsContainer">
-            <Card></Card> <Card></Card> <Card></Card>
+            {
+                CartasAMostrar.map((carta:any) => {
+                    return <Card Link={carta.link + carta.slug} Title={carta.data.title} Date={carta.data.date} ImgSRC={carta.data.img} Description={carta.data.description}></Card>
+                })
+            }
         </div>
-        <button class="section_Button center">VER TODO</button>
+        <a href=/eventos><button class="section_Button center">VER EVENTOS</button></a>
+        <a href="/noticias"><button class="section_Button center">VER NOTICIAS</button></a>
 
     </section>
 
@@ -51,11 +154,12 @@ import ramble_logo from '../assets/ramble_logo.svg';
 
     <section class="secondaryBackground section_Column center homepage_LastSection">
         <Image alt="Logo de Ramble" src={ramble_logo} class="section_MiniImage"></Image>
-        <p class="section_Details section_Text_Gray">Visita nuestras redes sociales</p>
+        <p class="section_Paragraph section_Text_Gray">Visita nuestras redes sociales</p>
         <div>
             <button class="section_Button"><i class="fa-brands fa-square-facebook fa-2x"></i></button>
             <button class="section_Button"><i class="fa-brands fa-x-twitter fa-2x"></i></button>
         </div>
     </section>
 </Layout>
+
 

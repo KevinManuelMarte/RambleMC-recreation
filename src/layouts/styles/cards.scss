@@ -11,7 +11,7 @@
     align-self: center;
     padding-bottom: clamp(10px, 2vmin, 20px);
     background-color: $base01;
-    border-radius: clamp(20px, 2vmin, 20px);
+    border-radius: clamp(10px, 2vmin, 20px);
     margin: 10px auto;
     width: 100%;
     text-align: left;
@@ -31,7 +31,7 @@
 
 .card_Details {
     font-family: $paragraphAndOthersFont;
-    font-size: clamp(3px, 2.2vmin, 17px);
+    font-size: clamp(16px, 2.2vmin, 17px);
     margin: clamp(5px, 1vmin, 10px);
     margin-top: clamp(10px, 2vmin, 20px);
     color: $base04;
@@ -40,7 +40,7 @@
 .card_Title {
     color: white;
     font-family: $paragraphAndOthersFont;
-    font-size: clamp(16px, 2vmin, 25px);
+    font-size: clamp(20px, 2vmin, 25px);
     margin: clamp(5px, 1vmin, 10px);
     margin-top: 0.2vmin;
 }
@@ -50,7 +50,7 @@
     margin: clamp(5px, 1vmin, 10px);
     margin-top: 0;
     font-family: $paragraphAndOthersFont;
-    font-size: clamp(8px, 2vmin, 17px);
+    font-size: clamp(16px, 2vmin, 17px);
 }
 
 @media screen and (max-width: resolution.$mobileResolution){
@@ -60,11 +60,3 @@
     }
 }
 
-@media screen and (min-width: 1600px) {
-
-    .card_Image {
-        transition: 0.2s all ease;
-        height: 320px;
-        width: 100%;
-    }
-}

@@ -1,0 +1,301 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Database from '../controllers/database-controller'
+
+const database_controller = new Database;
+
+if (!Astro.cookies.has("Sesion")) {
+    return Astro.redirect('/')
+}
+else {
+    if (Astro.cookies.get('Sesion')) {
+        const SesionCookie = Astro.cookies.get('Sesion');
+
+        console.log(SesionCookie?.value + " ha ingresado a la página de ver reportes. Fecha: " + new Date())
+        const UsuarioExistente = await database_controller.conseguirUsuario(SesionCookie?.value);
+        if (UsuarioExistente == false) {
+            return Astro.redirect('/')
+        }
+    }
+}
+
+
+if (Astro.request.method == "POST") {
+    const data = await Astro.request.formData();
+    const Reportes:any | string = data.get("reportes");
+    const ReportesAAceptar:any | string = data.get("reportesAAceptar");
+    const ReportesAEliminarr:any | string = data.get("reportesAEliminar");
+
+    if (Reportes) {
+        const ReportesIDsArray:any[] | string[] = Reportes.split(',');
+        ReportesIDsArray.filter((reporte_id) => {
+            return reporte_id != '' || ' ';
+        })
+
+        ReportesIDsArray.pop();
+        database_controller.EliminarReportes(ReportesIDsArray)
+
+    }
+
+    if (ReportesAAceptar) {
+        const ReportesIDsArray:any[] | string[] = ReportesAAceptar.split(',');
+        ReportesIDsArray.filter((reporte_id) => {
+            return reporte_id != '' || ' ';
+        })
+
+        ReportesIDsArray.pop();
+        database_controller.AceptarReportes(ReportesIDsArray)
+    }
+
+    if (ReportesAEliminarr) {
+        const ReportesIDsArray:any[] | string[] = ReportesAEliminarr.split(',');
+        ReportesIDsArray.filter((reporte_id) => {
+            return reporte_id != '' || ' ';
+        })
+
+        ReportesIDsArray.pop();
+        database_controller.RechazarReportes(ReportesIDsArray)
+    }
+}
+
+const Reportes:any[] = await database_controller.conseguirReportes();
+
+const ReportesObjetos = Reportes.map((reporte:any) => {
+    return {reporte_id: `${reporte.reporte_id}`, reportador: `${reporte.reportador}`, reportado: `${reporte.reportado}`, linkPruebas: `${reporte.linkPruebas}`, fecha: `${reporte.fecha}`, aceptado: `${reporte.aceptado}`, rechazado: `${reporte.rechazado}`, motivo: `${reporte.motivo}`};
+})
+
+ReportesObjetos.sort((a:any, b:any) => {
+    a = a.reporte_id
+    b = b.reporte_id
+    return a - b;
+})
+
+
+ReportesObjetos.reverse();
+
+const ReportesAceptados = ReportesObjetos.filter((reporte) => {
+    return reporte.aceptado == "1";
+})
+
+const ReportesRechazadps = ReportesObjetos.filter((reporte) => {
+    return reporte.rechazado == "1";
+})
+
+const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
+    if (reporte.rechazado == "null" && reporte.aceptado == "null") {
+        return reporte
+    }
+})
+
+
+
+
+---
+
+<Layout Title='Ramble' Pagina=''>
+    <section class="reporteslol">
+        <div>
+
+        
+        <form method="post"> 
+            <label for="ReportesInput" hidden="true">Ids de los reportes a eliminar: </label>
+            <input type="text" required="true" id="ReportesInput" hidden="true" value="" name="reportes">
+            <button type="submit" class="section_Button">ELIMINAR REPORTES</button>
+        </form>
+        <form method="post"> 
+            <label for="ReportesInput" hidden="true">Ids de los reportes a aceptar: </label>
+            <input type="text" required="true" id="ReportesInput" hidden="true" value="" name="reportesAAceptar">
+            <button type="submit" class="section_Button">ACEPTAR REPORTES</button>
+        </form>
+        <form method="post"> 
+            <label for="ReportesInput" hidden="true">Ids de los reportes a rechazar: </label>
+            <input type="text" required="true" id="ReportesInput" hidden="true" value="" name="reportesAEliminar">
+            <button type="submit" class="section_Button">RECHAZAR REPORTES</button>
+        </form>
+    </div>
+        <div>
+            <button class="botonSeleccionarContenedor" id="BotonVerReportesAceptados">REPORTES ACEPTADOS</button>
+            <button class="botonSeleccionarContenedor" id="BotonVerReportesRechazados">REPORTES RECHAZADOS</button>
+            <button class="botonSeleccionarContenedor" id="BotonVerReportesSinDecidir">REPORTES SIN DECIDIR</button>
+            <button class="botonSeleccionarContenedor" id="BotonVerReportesTodos">TODOS</button>
+        </div>
+        <div id="reportes_todos" class="contenedor_reportes visible">
+            {
+                ReportesObjetos.map( (reporte:any) => {
+
+                    return  <div class=`${reporte.aceptado == "1" ? "reportes_Card reporteAceptado" : "reportes_Card"} ${reporte.rechazado == "1" ? "reportes_Card reporteRechazado" : "reportes_Card"}`   id={reporte.reporte_id}>
+                        <br />
+                        <span><b>ID del reporte: </b> {reporte.reporte_id}</span>
+                        <span><b>Reportador: </b> {reporte.reportador}</span>
+                        <span><b>Reportado: </b> {reporte.reportado}</span>
+                        <span><b>Motivo del reporte: </b> {reporte.motivo}</span>
+                        <span><b>Pruebas: </b> <a href={reporte.fecha} class="reportes_Card_Link">{reporte.linkPruebas}</a></span>
+                        <span><b>Fecha: </b> {reporte.fecha}</span>
+        
+                        <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
+                        
+                    <br />
+                </div>
+                })
+            }
+        </div>
+
+        <div id="reportes_aceptados" class="contenedor_reportes" >
+            {
+                ReportesAceptados.map( (reporte:any) => {
+                    return  <div class="reportes_Card reporteAceptado" id={reporte.reporte_id}>
+                        <br />
+                        <span><b>ID del reporte: </b> {reporte.reporte_id}</span>
+                        <span><b>Reportador: </b> {reporte.reportador}</span>
+                        <span><b>Reportado: </b> {reporte.reportado}</span>
+                        <span><b>Motivo del reporte: </b> {reporte.motivo}</span>
+                        <span><b>Pruebas: </b> <a href={reporte.fecha} class="reportes_Card_Link">{reporte.linkPruebas}</a></span>
+                        <span><b>Fecha: </b> {reporte.fecha}</span>
+        
+                        <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
+                        
+                    <br />
+                </div>
+                })
+            }
+        </div>
+
+        <div id="reportes_rechazados" class="contenedor_reportes" >
+            {
+                ReportesRechazadps.map( (reporte:any) => {
+                    return  <div class="reportes_Card reporteRechazado" id={reporte.reporte_id}>
+                        <br />
+                        <span><b>ID del reporte: </b> {reporte.reporte_id}</span>
+                        <span><b>Reportador: </b> {reporte.reportador}</span>
+                        <span><b>Reportado: </b> {reporte.reportado}</span>
+                        <span><b>Motivo del reporte: </b> {reporte.motivo}</span>
+                        <span><b>Pruebas: </b> <a href={reporte.fecha} class="reportes_Card_Link">{reporte.linkPruebas}</a></span>
+                        <span><b>Fecha: </b> {reporte.fecha}</span>
+        
+                        <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
+                        
+                    <br />
+                </div>
+                })
+            }
+        </div>
+
+        <div id="reportes_sindecidir" class="contenedor_reportes" >
+            {
+                ReportesSinDecidir.map( (reporte:any) => {
+                    return  <div class="reportes_Card" id={reporte.reporte_id}>
+                        <br />
+                        <span><b>ID del reporte: </b> {reporte.reporte_id}</span>
+                        <span><b>Reportador: </b> {reporte.reportador}</span>
+                        <span><b>Reportado: </b> {reporte.reportado}</span>
+                        <span><b>Motivo del reporte: </b> {reporte.motivo}</span>
+                        <span><b>Pruebas: </b> <a href={reporte.fecha} class="reportes_Card_Link">{reporte.linkPruebas}</a></span>
+                        <span><b>Fecha: </b> {reporte.fecha}</span>
+        
+                        <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
+                        
+                    <br />
+                </div>
+                })
+            }
+        </div>
+</section>
+
+<script>
+    window.addEventListener("beforeunload", ()=> {
+        Astro.cookies.set("Sesion", "Loul")
+    })
+
+    //Botones para mostrar todos los reportes, solo los rechazados o los aceptados
+    const Botones = document.querySelectorAll(".botonSeleccionarContenedor");
+    const BotonVerReportesRechazados = document.getElementById("BotonVerReportesRechazados")
+    const BotonVerReportesAceptados = document.getElementById("BotonVerReportesAceptados")
+    const BotonVerReportesTodos = document.getElementById("BotonVerReportesTodos")
+    const BotonVerReportesSinDecidir = document.getElementById("BotonVerReportesSinDecidir")
+
+    //Contenedores de reportes rechazados, aceptados o de todos los reportes
+    const ContenedorReportesSinDecidir = document.getElementById("reportes_sindecidir")
+    const ContenedorDeTodosLosReportes = document.getElementById("reportes_todos")
+    const ContenedorReportesRechazados = document.getElementById("reportes_rechazados")
+    const ContenedorReportesAceptados = document.getElementById("reportes_aceptados")
+
+    BotonVerReportesTodos?.addEventListener("click" , ()=> {
+        ContenedorReportesRechazados?.classList.remove("visible")
+        ContenedorReportesAceptados?.classList.remove("visible")
+        ContenedorReportesSinDecidir?.classList.remove("visible")
+        ContenedorDeTodosLosReportes?.classList.add("visible")
+
+        Botones.forEach(boton => boton.classList.remove("botonSeleccionarContenedor_Activo"));
+
+        BotonVerReportesTodos.classList.add("botonSeleccionarContenedor_Activo")
+    })
+
+    BotonVerReportesRechazados?.addEventListener("click" , ()=> {
+        ContenedorReportesAceptados?.classList.remove("visible")
+        ContenedorDeTodosLosReportes?.classList.remove("visible")
+        ContenedorReportesSinDecidir?.classList.remove("visible")
+        ContenedorReportesRechazados?.classList.add("visible")
+        Botones.forEach(boton => boton.classList.remove("botonSeleccionarContenedor_Activo"));
+
+        BotonVerReportesRechazados.classList.add("botonSeleccionarContenedor_Activo")
+    })
+
+    BotonVerReportesAceptados?.addEventListener("click" , ()=> {
+        ContenedorReportesRechazados?.classList.remove("visible")
+        ContenedorDeTodosLosReportes?.classList.remove("visible")
+        ContenedorReportesSinDecidir?.classList.remove("visible")
+        ContenedorReportesAceptados?.classList.add("visible")
+        Botones.forEach(boton => boton.classList.remove("botonSeleccionarContenedor_Activo"));
+
+        BotonVerReportesAceptados.classList.add("botonSeleccionarContenedor_Activo")
+    })
+
+    BotonVerReportesSinDecidir?.addEventListener("click" , ()=> {
+        ContenedorReportesRechazados?.classList.remove("visible")
+        ContenedorDeTodosLosReportes?.classList.remove("visible")
+        ContenedorReportesAceptados?.classList.remove("visible")
+        ContenedorReportesSinDecidir?.classList.add("visible")
+        Botones.forEach(boton => boton.classList.remove("botonSeleccionarContenedor_Activo"));
+
+    BotonVerReportesSinDecidir.classList.add("botonSeleccionarContenedor_Activo")
+    })
+
+    const BotonesDeSeleccionarReportes = document.querySelectorAll(".reportes_Card_Boton");
+    const ReportesSeleccionadosInput = document.querySelectorAll("#ReportesInput")
+
+    BotonesDeSeleccionarReportes.forEach((boton) => {
+        boton.addEventListener("click", () => {
+            const reporte:any = boton.parentElement;
+
+            if (!reporte?.classList.contains("ReporteSeleccionado")) {
+                const reporte:any = boton.parentElement;
+                reporte.classList.add("ReporteSeleccionado")
+                boton.classList.add("botonSeleccionarContenedor_Activo")
+
+                ReportesSeleccionadosInput.forEach(input => {
+                    const ReportesSeleccionados = input?.getAttribute("value");
+                    input?.setAttribute("value", `${ReportesSeleccionados}${reporte.id},`)
+                })
+            }
+
+            else  if ((reporte?.classList.contains("ReporteSeleccionado"))){
+                const reporte:any = boton.parentElement;
+
+                reporte.classList.remove("ReporteSeleccionado")
+                boton.classList.remove("botonSeleccionarContenedor_Activo")
+                ReportesSeleccionadosInput.forEach(input => {
+                    const ReportesSeleccionados = input?.getAttribute("value");
+                    const ReportesSeleccionadosArray = ReportesSeleccionados?.split(',');
+                    ReportesSeleccionadosArray?.splice(ReportesSeleccionadosArray.lastIndexOf(reporte.id), 1)
+                    input?.setAttribute("value", `${ReportesSeleccionadosArray?.join(",")}`)
+                })
+    
+            }
+        })
+    })
+
+
+</script>
+</Layout>
+
+

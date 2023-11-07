@@ -1,7 +1,10 @@
 @use "../fonts.scss" as fonts;
 @use "../colors.scss" as colors;
+@use "../resolutions.scss" as resolutions;
 
-.article {
+article {
+    margin: 0 auto;
+    max-width: 85%;
     padding: clamp(30px, 8vmin, 80px);
 
     .article_Header {
@@ -38,7 +41,7 @@
     }
 
     .article_Content {
-        h2 {
+        h2, h1 {
             transition: 0.5s all ease;
             color: gray;
             margin-bottom: clamp(12px, 2vmin, 10px) !important;
@@ -47,7 +50,10 @@
         }
     
         p {
-            margin: clamp(10px, 1vmin, 20px);
+            transition: 0.5s all ease;
+            color: gray;
+            font-family: fonts.$paragraphAndOthersFont;
+            margin-bottom: clamp(10px, 1vmin, 20px);
             line-height: 150%;
             letter-spacing: 1.3px;
         }
@@ -55,6 +61,7 @@
             display: flex;
             flex-direction: column;
             margin: clamp(10px, 1vmin, 20px);
+            margin-bottom: 0;
             gap: clamp(3px, 1vmin, 20px);
             margin-left: clamp(10px, 1vmin, 20px);
             list-style: square;
@@ -63,6 +70,7 @@
     
             li {
                 margin: clamp(3px, 1vmin, 20px);
+                margin-bottom: 0;
                 transition: 0.5s all ease;
                 color: gray;
                 font-family: fonts.$paragraphAndOthersFont;
@@ -82,5 +90,18 @@
             filter: brightness(80%);
             transition: 0.2s all ease;
         }
+
+        img {
+            display: flex;
+            max-width: 80%;
+            margin-top: clamp(10px, 1vmin, 20px);
+        }
+
+    }
+}
+
+@media screen and (max-width: resolutions.$mobileResolution){
+    article {
+        max-width: 100%;
     }
 }

@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+const FAQCollection = await getCollection('FAQ');
+
+FAQCollection.sort((a:any, b:any)=> {
+    a = new Date(a.data.dateToSort);
+    b  = new Date(b.data.dateToSort);
+    return a - b;
+})
+
+FAQCollection.reverse()
+---
+
+<Layout Title="Ramble" Pagina='FAQ'>
+    <section id="Events" class="TwoColumnsCardContainer" >
+        { FAQCollection.map(faq => <a class="section_Card" href={"/FAQ/" + faq.slug}><img alt="Imagen de evento de Ramble" src={`${faq.data.img}`} class="card_Image"></img><h4 class="card_Details">{faq.data.date}</h4><h4 class="card_Title">{faq.data.title}</h4><p class="card_Description">{faq.data.description}</p></a>)}
+    </section>
+</Layout>
+

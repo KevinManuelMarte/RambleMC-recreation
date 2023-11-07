@@ -22,14 +22,21 @@
     color: white;
     margin-bottom: clamp(12px, 2vmin, 10px) !important;
     font-family: $titleAndButtonsFont;
-    font-size: clamp(12px, 8vmin, 50px);
+    font-size: clamp(22px, 8vmin, 50px);
+}
+
+.section_SubTitle {
+    transition: 0.5s all ease;
+    color: white;
+    font-family: $titleAndButtonsFont;
+    font-size: clamp(12px, 6vmin, 40px);
 }
 
 .section_Paragraph {
     transition: 0.5s all ease;
     color: white;
     font-family: $paragraphAndOthersFont;
-    font-size: clamp(8px, 2.7vmin, 20px);
+    font-size: clamp(15px, 2.7vmin, 25px);
 }
 
 .section_Details {
@@ -54,6 +61,7 @@
     background-color: $base03;
     border: none;
     padding: clamp(5px, 3vmin, 20px) clamp(10px, 5vmin, 30px);
+    margin: 0px clamp(5px, 1vmin, 10px) !important;
     font-size: clamp(5px, 3vmin, 20px);
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -74,4 +82,25 @@
 .section_MiniImage {
     width: clamp(10px, 15vmin, 150px);
     height: clamp(10px, 15vmin, 120px);
+}
+
+.section_Form {
+    display: flex;
+    flex-direction: column;
+
+    margin: clamp(20px, 4vmin, 40px);
+
+
+    input {
+        background-color: gray;
+        border-style: solid;
+        border-color: black;
+        font-family: $paragraphAndOthersFont;
+    }
+
+    input:focus {
+        outline: 0.3vmin solid $base03;
+        outline-offset: -1px;
+    }
+
 }

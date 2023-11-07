@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+
+export async function getStaticPaths() {
+    const FAQCollection = await getCollection('FAQ');
+
+    return FAQCollection.map((faq) => ({params: {slug: faq.slug}, props: {faq}, }));
+}
+
+const {faq} = Astro.props;
+const {Content} = await faq.render()
+
+export const prerender = true
+---
+
+<Layout Pagina='FAQ' Title='Ramble'>
+    <article>
+        <section class="article_Header">
+            <h1 class="article_Title">{faq.data.title}</h1>
+        </section>
+
+        <main class="article_Content">
+            <Content />
+        </main>
+    </article>
+</Layout>

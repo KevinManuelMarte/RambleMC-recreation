@@ -1,0 +1,146 @@
+import mysql2 from 'mysql2';
+import bcrypt from 'bcrypt';
+
+const TablaReportes = import.meta.env.SECRET_BD_REPORTES_TABLA
+
+const con = mysql2.createConnection({
+    host: '127.0.0.1',
+    user: import.meta.env.SECRET_BD_REPORTES_USER,
+    password: import.meta.env.SECRET_BD_REPORTES_PASSWORD,
+    database: import.meta.env.SECRET_BD_REPORTES_BD,
+})
+
+export class Password {
+    async HashPasword (password:any) {
+        let salt = await bcrypt.genSalt(10);
+
+        const promise = new Promise ((resolve, reject)=> {
+            bcrypt.hash(password, salt, (error, hash) => {
+                if (error) return reject(error);
+                if (hash) return resolve(hash);
+            })
+        })
+
+        return promise
+    }
+
+    async ComparePassword (password:any, hashword:any) {
+        const promise = new Promise((resolve, reject) => {
+            bcrypt.compare(password, hashword, (error, passwordMatch)=> {
+                if (error) return reject(error);
+                if (passwordMatch) resolve(true);
+                if (!passwordMatch) resolve(false);
+            })
+        })
+
+        return promise;
+    }
+}
+
+
+export default class Database {
+    async agregarReporte (reportado:any | string, reportador:any | string, linksPruebas:any | string, fecha:any | string, motivo:any | string) {
+        con.connect((error)=> {
+            if (error) return console.log("¡Fallo al conectarse! \n" + error)
+        })
+        con.query(`INSERT INTO ${TablaReportes} (reportador, reportado, linkPruebas, fecha, motivo) VALUES("${reportador}", "${reportado}", "${linksPruebas}", "${fecha}", "${motivo}")`, (error) => {
+            if (error) console.log(error);
+            console.log("¡Reporte agregado exitosamente!")
+        })
+    }
+
+    async conseguirReportes () {
+        con.connect((error)=> {
+            if (error) return console.log("¡Fallo al conectarse! \n" + error)
+        })
+
+
+        const Reportes =  new Promise((resolve, reject) => {
+            con.query(`SELECT * FROM ${TablaReportes}`, (error, results) => {
+                if (error) throw reject(error);
+                resolve(results)
+            })
+        })
+
+        return Reportes.then((result:any) => result);
+    }
+
+
+    async conseguirUsuario (usuario:any) {
+        con.connect((error)=> {
+            if (error) return console.log("¡Fallo al conectarse! \n" + error)
+        })
+
+        const Reportes =  new Promise((resolve, reject) => {
+            con.query(`SELECT * FROM ramblem1_usuarios WHERE usuario = "${usuario}"`, (error, results:any) => {
+                if (error) throw reject(error);
+                if (results.length == 0) {
+                    resolve (false)
+                }
+                else {
+                    resolve (true)
+                }
+            })
+        })
+
+
+        return Reportes.then((result) => result);
+    }
+
+    async iniciarSesion (usuario:any, password:any) {
+        const PasswordManager = new Password;
+
+        con.connect((error)=> {
+            if (error) return console.log("¡Fallo al conectarse! \n" + error)
+        })
+
+        const Reportes =  new Promise((resolve, reject) => {
+            con.query(`SELECT * FROM ramblem1_usuarios WHERE usuario = "${usuario}"`, (error, results:any) => {
+                if (error) throw reject(error);
+                const PasswordMatch =  PasswordManager.ComparePassword(password, results[0].pass)
+                PasswordMatch.then(result => resolve(result))
+            })
+        })
+
+
+        return Reportes.then((result) => result);
+    }
+
+
+    async EliminarReportes (reportes:any[] | string[]) {
+        con.connect((error)=> {
+            if (error) return console.log("¡Fallo al conectarse! \n" + error)
+        })
+
+        reportes.forEach((reporteID:any)=> {
+            con.query(`DELETE FROM ramblem1_reportesUsuarios WHERE reporte_id = ${reporteID}`, (error) => {
+                if (error) throw error;
+            })
+        })
+    }
+
+    async AceptarReportes (reportes:any[] | string[]) {
+        con.connect((error)=> {
+            if (error) return console.log("¡Fallo al conectarse! \n" + error)
+        })
+
+        reportes.forEach((reporteID:any)=> {
+            con.query(`UPDATE ramblem1_reportesUsuarios SET aceptado = 1, rechazado = 0 WHERE reporte_id = ${reporteID}`, (error) => {
+                if (error) throw error;
+            })
+        })
+    }
+
+    async RechazarReportes (reportes:any[] | string[]) {
+        con.connect((error)=> {
+            if (error) return console.log("¡Fallo al conectarse! \n" + error)
+        })
+
+        reportes.forEach((reporteID:any)=> {
+            con.query(`UPDATE ramblem1_reportesUsuarios SET aceptado = 0, rechazado = 1 WHERE reporte_id = ${reporteID}`, (error) => {
+                if (error) throw error;
+            })
+        })
+    }
+
+}

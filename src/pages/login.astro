@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Database from '../controllers/database-controller'
+
+const database_controller = new Database;
+
+if (Astro.request.method == 'POST') {
+    try {
+        const data = await Astro.request.formData();
+        const usuario:any = data.get('usuario')
+        const password:any= data.get('password')
+        
+        const Correcto = await database_controller.iniciarSesion(usuario, password)
+
+        if (Correcto == true) {
+            Astro.cookies.set("Sesion", usuario, {path: '/'});
+            return   Astro.redirect('/verReportes');
+        }
+    }
+    catch (error) {
+        console.log("WEON" + error)
+    }
+}
+
+---
+
+<Layout Title="Ramble" Pagina='reportar'>
+
+    <article class="section_Text_Gray">
+        
+        <section class="article_Content">
+            <form method="post" class="section_Form">
+                <label for="nombre_reportador" class="section_SubTitle section_Text_Gray">Usuario</label> <br>
+                <input type="text" name="usuario" required="true"> <br>
+        
+                <label for="nombre_reportado" class="section_SubTitle section_Text_Gray" >Contraseña</label> <br>
+                <input type="text" name="password" required="true"> <br>
+        
+                <button id="boton_enviar_reporte" class="section_Button">CONFIRMAR</button>
+            </form>
+
+        </section>
+    </article>
+</Layout>
+
+

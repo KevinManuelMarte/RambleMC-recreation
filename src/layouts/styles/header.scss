@@ -50,7 +50,7 @@
 .mainHeader_Nav {
     display: flex;
     justify-content: space-between;
-    gap: clamp(15px, 6vmin, 80px);
+    gap: clamp(5px, 3vmin, 80px);
     overflow: hidden;
 }
 
@@ -60,7 +60,7 @@
 }
 
 
-@media screen and (max-width: $mobileResolution) {
+@media screen and (max-width: 850px) {
     .mainHeader {
         border-bottom: $base01 0.5vmin solid;
         padding: clamp(5px, 1vmin, 35px) clamp(10px, 3vmin, 70px);
@@ -91,7 +91,7 @@
     .mainHeader_Nav .nav_Link {
         padding: 2vmin;
         background-color: $base01;
-        border-bottom: 0.3vmin solid $base00;
+        border-bottom: 0.5vmin solid $base00;
     }
 
     .mainHeader_Nav .nav_Link_Active {

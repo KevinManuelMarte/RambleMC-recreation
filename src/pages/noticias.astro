@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+const NoticiasCollection = await getCollection('noticias');
+
+console.log(NoticiasCollection)
+
+NoticiasCollection.sort((a:any, b:any)=> {
+    a = new Date(a.data.dateToSort);
+    b  = new Date(b.data.dateToSort);
+    return a - b;
+})
+
+NoticiasCollection.reverse()
+
+
+---
+
+<Layout Title="Ramble" Pagina='noticias'>
+    <section class="TwoColumnsCardContainer" >
+        { NoticiasCollection.map(noticia => {
+           return <a class="section_Card" href={"/noticias/" + noticia.slug}>
+                <img alt="Imagen de noticia de Ramble" src={`${noticia.data.img}`} class="card_Image"></img>
+                <h4 class="card_Details">{noticia.data.date}</h4><h4 class="card_Title">{noticia.data.title}</h4>
+                <p class="card_Description">{noticia.data.description}</p>
+                </a>}
+            )}
+    </section>
+</Layout>
+

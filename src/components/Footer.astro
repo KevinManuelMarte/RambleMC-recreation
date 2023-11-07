@@ -1,10 +1,8 @@
 ---
 interface Props {
-    ActivePage:string;
+    Pagina:string;
 }
-
-import {Image} from 'astro:assets';
-const { ActivePage } = Astro.props;
+const { Pagina } = Astro.props;
 ---
 
 <footer class="mainFooter">
@@ -13,8 +11,8 @@ const { ActivePage } = Astro.props;
     <h3 class="mainFooter_Title">Ramble</h3>
 
     <nav class="mainFooter_Nav">
-        <a href="/ramble_TOS" class=`nav_Link ${ActivePage == 'ramble_TOS' ? 'nav_Link_Active' : 'nav_Link' }`>Terminos y condiciones</a>
-        <a href="/ramble_PP" class=`nav_Link ${ActivePage == 'ramble_PP' ? 'nav_Link_Active' : 'nav_Link' }`>Politica de privacidad</a>
+        <a href="/TOS" class=`nav_Link ${Pagina == 'TOS' ? 'nav_Link_Active' : 'nav_Link' }`>Terminos y condiciones</a>
+        <a href="/PP" class=`nav_Link ${Pagina == 'PP' ? 'nav_Link_Active' : 'nav_Link' }`>Politica de privacidad</a>
     </nav>
 </footer>
 

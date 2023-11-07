@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Database from '../controllers/database-controller'
+
+const DomainsAccepted:string[] = ["www.youtube.com", "www.imgur.com", "www.i.imgur.com", "www.pinterest.com", "www.facebook.com", "www.twitter.com", "www.drive.google.com"]
+const database_controller = new Database;
+
+if (Astro.request.method == 'POST') {
+    try {
+        const data = await Astro.request.formData();
+        const reportador:any | string  = data.get('reportador')
+        const reportado:any | string  = data.get('reportado')
+        const linksPruebas:any | string  = data.get('linksPruebas')
+        const motivoReporte:any | string = data.get('motivoReporte')
+        const fecha = new Date()
+
+        if (reportador.includes('https://' || 'http://') || reportado.includes('https://' || 'http://')) {
+            console.log('¡Reporte no valido!')
+            return Response.redirect(Astro.url)
+        }
+        if (linksPruebas.includes('https://')) {
+            const DominioLinksPruebas = linksPruebas.split('//')[1].split('/')[0]
+
+            if (!DomainsAccepted.includes(DominioLinksPruebas)) {
+                console.log('¡Reporte no valido! (El dominio no es valido)')
+                return Response.redirect(Astro.url)
+            }
+            else {
+                database_controller.agregarReporte(reportador, reportado, linksPruebas, `${fecha}`, motivoReporte)
+            }
+        }
+        else {
+            console.log('¡Link no valido!')
+        }
+
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
+---
+
+<Layout Title="Ramble" Pagina='reportar'>
+
+    <article class="section_Text_Gray">
+        
+        <section class="article_Content">
+            <h2 class="section_Title section_Text_Gray">Reportar jugadores</h2>
+            <p class="section_Paragraph section_Text_Gray">
+                En esta página puedes reportar a cualquier jugador que haya roto las reglas del servidor de Minecraft de una u otra manera. Debes enviar el reporte con el nombre de tu usuario de 
+                Minecraft, el nombre de usuario del jugador que se desee reportar y el link de las pruebas que tengas. Tienen que ser pruebas, ya sea en video o en imagenes, subidas a un sitio web de confianza.
+                Por ejemplo, imgur o Youtube. <strong>No se acepta ningún tipo de prueba que este subido a un sitio web extraño o que no sean videos o imagenes.</strong> No envies las pruebas subidas en un .zip, .rar 
+                o similar a algo como Mediafire. Tu reporte sera ignorado automaticamente.
+    
+                <br>
+    
+                <p>Puedes subir las pruebas y enviarlas por un link en el reporte en los siguientes sitios web: </p>
+            </p>
+    
+            <ul>
+                <li>Youtube (youtube.com)</li>
+                <li>Imgur (imgur.com)</li>
+                <li>Pinterest (pinterest.com)</li>
+                <li>Twitter (twitter.com)</li>
+                <li>Facebook (facebook.com)</li>
+                <li>Google Drive (drive.google.com)</li>
+                <li>ImgBB (ibb.co)</li>
+            </ul>
+            <br>
+
+            <p>Cualquier link enviado al reportar un usuario, que no sea de alguno de esos sitios web, sera automaticamente rechazado | ignorado.</p>
+    
+            <form method="post" class="section_Form">
+                <label for="nombre_reportador" class="section_SubTitle section_Text_Gray">Tu usuario de MC</label> <br>
+                <input type="text" name="reportador" required="true"> <br>
+        
+                <label for="nombre_reportado" class="section_SubTitle section_Text_Gray" >El usuario del jugador a reportar</label> <br>
+                <input type="text" name="reportado" required="true"> <br>
+
+                <label for="nombre_reportado" class="section_SubTitle section_Text_Gray">Motivo del reporte</label> <br>
+                <input type="text" name="motivoReporte" required="true"> <br>
+
+                <label for="nombre_reportado" class="section_SubTitle section_Text_Gray">Link de las pruebas</label> <br>
+                <input type="text" name="linksPruebas" required="true"> <br>
+
+                
+        
+                <button id="boton_enviar_reporte" class="section_Button">REPORTAR USUARIO</button>
+            </form>
+
+        </section>
+    </article>
+</Layout>
+
+

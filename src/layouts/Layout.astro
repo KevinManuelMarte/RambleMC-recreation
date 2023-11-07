@@ -1,11 +1,12 @@
 ---
 interface Props {
 	Title: string;
-	Page: string;
+	Pagina: string;
 }
 
-const { Title, Page } = Astro.props;
+const { Title, Pagina } = Astro.props;
 
+import {ViewTransitions} from 'astro:transitions'
 //Necessary componentes
 import Header from '../components/Header.astro';
 import Footer from "../components/Footer.astro";
@@ -19,20 +20,40 @@ import "./styles.scss";
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Sitio web oficial del servidor de Minecraft 'Ramble'" />
+		<meta name="description" content="Sitio web oficial del servidor de Minecraft Ramble. ¡Descubre los eventos, noticias y guias de Ramble en este sitio web!" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<script src="https://kit.fontawesome.com/c595e5d06f.js" crossorigin="anonymous"></script>
 
 		<title>{Title}</title>
+
+		<!--PROPIEDADES DE META TAGS PARA SEO -->
+		<!-- Facebook Meta Tags -->
+		<meta property="og:url" content={Astro.url}>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="Sitio web oficial de Ramble">
+		<meta property="og:description" content="Sitio web oficial del servidor de Minecraft Ramble. ¡Descubre los eventos, noticias y guias de Ramble en este sitio web!">
+		<meta property="og:image" content="/favicon.svg">
+
+		<!-- Twitter Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="twitter:domain" content="ramblemc.com">
+		<meta property="twitter:url" content={Astro.url}>
+		<meta name="twitter:title" content="Sitio web oficial de Ramble">
+		<meta name="twitter:description" content="Sitio web oficial del servidor de Minecraft Ramble. ¡Descubre los eventos, noticias y guias de Ramble en este sitio web!">
+		<meta name="twitter:image" content="/favicon.svg">
+		<!--PROPIEDADES DE META TAGS PARA SEO -->
+
+
+		
 	</head>
 	<body>
-	<Header ActivePage={Page}></Header>
+	<Header Pagina={Pagina}></Header>
 	<main>
+		<ViewTransitions />
 		<slot />
 	</main>
-	<Footer ActivePage={Page}></Footer>
-	<!-- <Footer></Footer> -->
+	<Footer Pagina={Pagina}></Footer>
 	</body>
 </html>

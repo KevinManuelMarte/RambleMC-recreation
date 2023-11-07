@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content"
+import Layout from "../../layouts/Layout.astro";
+export async function getStaticPaths () {
+    const GuiasCollection = await getCollection('guias');
+    return GuiasCollection.map(Guia => ({
+        params: {slug: Guia.slug}, props: {Guia},
+    }));
+}
+
+const {Guia} = Astro.props;
+const {Content} = await Guia.render();
+
+export const prerender = true
+
+---
+<Layout Title="Ramble" Pagina="guias">
+    <article>
+        <section class="article_Header">
+            <h1 class="article_Title">{Guia.data.title}</h1>
+            <h2 class="article_Date">{Guia.data.date}</h2>
+        </section>
+
+        <main class="article_Content">
+            <Content />
+        </main>
+    </article>
+</Layout>

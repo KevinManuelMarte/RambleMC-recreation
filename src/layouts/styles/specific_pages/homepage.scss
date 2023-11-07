@@ -3,16 +3,21 @@
 @use "../resolutions.scss" as resolution;
 
 .homepage_WelcomeSection {
+    transition: 0.5s all ease;
     display: flex;
     position: relative;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: clamp(250px, 90vh, 800px);
+    height: clamp(250px, 90vmin, 800px);
     width: 100%;
     box-shadow: inset 0px 0px clamp(50px, 10vmin, 80px) clamp(10px, 2vmin, 100px) $base00;
     margin: 0 auto;
     margin-bottom: 120px;
+
+    .section_Paragraph {
+        font-size: clamp(13px, 2.7vmin, 25px);
+    }
 }
 
 .homepage_WelcomeSection .section_Background {
@@ -26,13 +31,28 @@
     margin-top: clamp(40px, 10vmin, 100px);
 }
 
+// .homepage_CardsContainer {
+//     --auto-grid-min-size: clamp(20px, 60vmin, 390px);
+//     display: grid;
+//     justify-content: center;
+//     grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 30px));
+//     grid-gap: clamp(1rem, 4vmin, 3rem);
+//     margin: clamp(12px, 2vmin, 20px) clamp(25px, 2vmin, 20px);
+// }
+
 .homepage_CardsContainer {
-    --auto-grid-min-size: clamp(20px, 60vmin, 390px);
-    display: grid;
+    display: flex;
     justify-content: center;
-    grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 30px));
-    grid-gap: clamp(1rem, 4vmin, 3rem);
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    gap: clamp(1rem, 1vmin, 3rem);
     margin: clamp(12px, 2vmin, 20px) clamp(25px, 2vmin, 20px);
+
+    .section_Card {
+        width: clamp(300px, 50%, 400px);
+        margin: 10px 0;
+    }
 }
 
 
@@ -57,18 +77,26 @@
     max-width: 1400px;
     gap: clamp(5px, 2.5vmin, 30px);
     background-color: $base03;
+
+    .section_Button, p, h1, h2, h3 {
+        position: relative;
+        z-index: 4;
+    }
 }
 
 .container_Background {
     position: absolute;
+    align-self: center;
     width: 100%;
     height: 100%;
-    z-index: 3;
+    border-radius: clamp(10px, 4vmin, 40px);
+    z-index: 2;
 }
 
 .homepage_LastSection {
     padding: 30px 20vmin;
     padding-bottom: 60px;
+    min-height: 20vh;
     gap: clamp(10px, 2vmin, 15px);
     .section_Button {
         font-size: clamp(5px, 2vmin, 20px);
@@ -79,15 +107,16 @@
 
 @media screen and (max-width: resolution.$mobileResolution) {
     .homepage_OrangeCard {
+        transition: 0.5s all ease;
         display: flex;
         text-align: left;
         align-items: flex-start;
         flex-direction: column;
     }
 
-    .homepage_WelcomeSection {
-        height: 350px;
-    }
+    // .homepage_WelcomeSection {
+    //     height: 350px;
+    // }
 }
 @media screen and (min-width: 1800px) {
     .homepage_CardsContainer {

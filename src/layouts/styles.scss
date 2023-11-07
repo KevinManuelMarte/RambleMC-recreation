@@ -6,8 +6,10 @@
 @use "styles/nav.scss" as *;
 @use "styles/sections.scss" as *;
 @use "styles/specific_pages/homepage.scss" as *;
+@use "styles/specific_pages/reportes.scss" as *;
 @use "styles/cards.scss" as *;
 @use "styles/specific_pages/articles.scss" as articles;
+
 
 * {
     padding: 0;
@@ -20,6 +22,14 @@ body {
     max-width: 1900px;
     margin: 0 auto !important;
 
+}
+
+.TwoColumnsCardContainer {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 50% 50%;
+    padding: clamp(1rem, 4vmin, 3rem);
+    grid-gap: clamp(1rem, 4vmin, 3rem);
 }
 
 main {
@@ -45,3 +55,6 @@ main {
 }
 
 
+a {
+    text-decoration: none;
+}

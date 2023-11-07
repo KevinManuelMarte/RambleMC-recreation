@@ -1,12 +1,12 @@
 ---
 interface Props {
-    ActivePage:string;
+    Pagina:string;
 }
 
 import {Image} from 'astro:assets';
 import ramble_logo from '../assets/ramble_logo.svg';
 
-const { ActivePage } = Astro.props;
+const { Pagina } = Astro.props;
 ---
 
 <header class="mainHeader">
@@ -16,20 +16,31 @@ const { ActivePage } = Astro.props;
     <button class="mainHeader_MobileButton">MENU</button>
 
     <nav class="mainHeader_Nav">
-        <a href="/" class=`nav_Link ${ActivePage == 'home' ? 'nav_Link_Active' : 'nav_Link' }`>Inicio</a>
-        <a href="" class=`nav_Link ${ActivePage == 'guide' ? 'nav_Link_Active' : 'nav_Link' }`>Guías</a>
-        <a href="" class=`nav_Link ${ActivePage == 'blog' ? 'nav_Link_Active' : 'nav_Link' }`>Blog</a>
-        <a href="" class=`nav_Link ${ActivePage == 'shop' ? 'nav_Link_Active' : 'nav_Link' }`>Tienda</a>
-        <a href="" class=`nav_Link ${ActivePage == 'faq' ? 'nav_Link_Active' : 'nav_Link' }`>FAQ</a>
+        <a href="/" class=`nav_Link ${Pagina == 'inicio' ? 'nav_Link_Active' : 'nav_Link' }`>Inicio</a>
+        <a href="/guias" class=`nav_Link ${Pagina == 'guias' ? 'nav_Link_Active' : 'nav_Link' }`>Guías</a>
+        <a href="/eventos" class=`nav_Link ${Pagina == 'eventos' ? 'nav_Link_Active' : 'nav_Link' }`>Eventos</a>
+        <a href="/noticias" class=`nav_Link ${Pagina == 'noticias' ? 'nav_Link_Active' : 'nav_Link' }`>Noticias</a>
+        <!-- <a href="" class=`nav_Link ${Pagina == 'shop' ? 'nav_Link_Active' : 'nav_Link' }`>Tienda</a> -->
+        <a href="/FAQ" class=`nav_Link ${Pagina == 'FAQ' ? 'nav_Link_Active' : 'nav_Link' }`>FAQ</a>
+        <a href="/reportar" class=`nav_Link ${Pagina == 'reportar' ? 'nav_Link_Active' : 'nav_Link' }`>Reportar</a>
     </nav>
 
-    <button class="mainHeader_PlayButton">JUGAR</button>
+    <button class="mainHeader_PlayButton" id="IPButton">IP</button>
 </header>
 
 
 <script>
-    const OpenMobileMenuButton = document.querySelector(".mainHeader_MobileButton");
-    const MainHeaderNav = document.querySelector(".mainHeader_Nav");
+    document.addEventListener("astro:page-load", ()=> {
+        console.log("PERO TIO")
+    function copiarIP() {
+        navigator.clipboard.writeText("ramblemc.com:4000")
+        window.alert("¡IP copiada correctamente!")
+    }
+
+    const IPButton:any | HTMLElement = document.getElementById("IPButton")
+    IPButton.addEventListener("click", copiarIP)
+    const OpenMobileMenuButton:any | HTMLElement = document.querySelector(".mainHeader_MobileButton");
+    const MainHeaderNav:any | HTMLElement = document.querySelector(".mainHeader_Nav");
 
     OpenMobileMenuButton?.addEventListener("click", ()=> { 
         if (!MainHeaderNav?.classList.contains("mainHeader_Nav_MobileActive")){
@@ -40,5 +51,6 @@ const { ActivePage } = Astro.props;
             OpenMobileMenuButton.classList.remove("mainHeader_MobileButton_Active")
             MainHeaderNav?.classList.remove("mainHeader_Nav_MobileActive");
         } 
+    })
     })
 </script>
