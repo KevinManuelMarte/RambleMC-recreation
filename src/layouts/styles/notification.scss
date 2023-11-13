@@ -1,0 +1,23 @@
+@use 'colors.scss' as colors;
+@use 'fonts.scss' as fonts;
+
+.notification {
+    position: fixed;
+    z-index: 10;
+    background-color: colors.$base00;
+    border: 0.2vmin solid colors.$base03;
+    border-radius: 1vmin;
+    bottom: 2%;
+    left: 2%;
+    display: flex;
+    align-items: center;
+    padding: clamp(10px, 1.2vmin, 50px);
+    justify-content: center;
+
+    p {
+        color: white;
+        font-size: clamp(10px, 2.5vmin, 50px);
+        font-family: fonts.$titleAndButtonsFont;
+        text-transform: uppercase;
+    }
+}

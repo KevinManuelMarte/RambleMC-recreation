@@ -12,9 +12,11 @@ const {Title, Date, ImgSRC, Description, Link} = Astro.props;
 ---
 
 
-<a class="section_Card" href={Link}>
-    <img alt="Imagen de evento de Ramble" src={ImgSRC} class="card_Image"></img>
-    <h3 class="card_Details">{Date}</h3>
-    <h3 class="card_Title">{Title}</h3>
-    <p class="card_Description">{Description}</p>
-</a>
+    <a class="section_Card" href={Link}>
+        <img alt="Imagen de evento de Ramble" src={ImgSRC} class="card_Image"></img>
+        <h3 class="card_Details">{Date}</h3>
+        <h3 class="card_Title">{Title}</h3>
+        <p class="card_Description">{Description}</p>
+    </a>
+
+

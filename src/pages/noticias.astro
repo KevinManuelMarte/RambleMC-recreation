@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 const NoticiasCollection = await getCollection('noticias');
 
-console.log(NoticiasCollection)
 
 NoticiasCollection.sort((a:any, b:any)=> {
     a = new Date(a.data.dateToSort);

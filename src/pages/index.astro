@@ -17,7 +17,9 @@ import { getCollection } from 'astro:content';
 const Eventos = await getCollection('eventos');
 const Noticias = await getCollection('noticias');
 
-let CartasAMostrar:any[] = [];
+let TodasLasCartas:any[] = [];
+let CartasDeNoticias:any[] = [];
+let CartasDEventos:any[] = [];
 let CartasAgregadas:number = 0;
 const MaximaCantidadDeCartas:number = 2;
 
@@ -38,7 +40,7 @@ if (Eventos && !Noticias) {
         CartasAgregadas++
         const NewProperty = {link: "eventos/"};
         const NewEvent = Object.assign(event, NewProperty)
-        CartasAMostrar.unshift(NewEvent)
+        Eventos.unshift(NewEvent)
     })
 }
 else if (!Eventos && Noticias) {
@@ -57,7 +59,7 @@ else if (!Eventos && Noticias) {
         CartasAgregadas++
         const NewProperty = {link: "noticias/"};
         const NewNew = Object.assign(Noticias, NewProperty)
-        CartasAMostrar.unshift(NewNew)
+        CartasDeNoticias.unshift(NewNew)
     })
 }
 else if (Eventos && Noticias) {
@@ -84,7 +86,8 @@ else if (Eventos && Noticias) {
         CartasAgregadas++
         const NewProperty = {link: "eventos/"};
         const NewEvent = Object.assign(event, NewProperty)
-        return CartasAMostrar.unshift(NewEvent)
+        Object.assign(Noticias, {noticia: false})
+        return CartasDEventos.unshift(NewEvent)
     })
     Noticias.forEach((Noticias) => {
         if (CartasAgregadas >= MaximaCantidadDeCartas) {
@@ -93,21 +96,41 @@ else if (Eventos && Noticias) {
         CartasAgregadas++
         const NewProperty = {link: "noticias/"};
         const NewNew = Object.assign(Noticias, NewProperty)
-        return CartasAMostrar.unshift(NewNew)
+        Object.assign(Noticias, {noticia: true})
+        return CartasDeNoticias.unshift(NewNew)
     })
 
 }
 
-if (CartasAMostrar) {
-    CartasAMostrar.sort((a:any, b:any) => {
+if (TodasLasCartas) {
+    TodasLasCartas.sort((a:any, b:any) => {
         a = new Date (a.data.dateToSort);
         b = new Date (b.data.dateToSort);
         return a - b;
     })
 
-    CartasAMostrar.reverse()
+    TodasLasCartas.reverse()
 }
 
+if (CartasDEventos) {
+    CartasDEventos.sort((a:any, b:any) => {
+        a = new Date (a.data.dateToSort);
+        b = new Date (b.data.dateToSort);
+        return a - b;
+    })
+
+    CartasDEventos.reverse()
+}
+
+if (CartasDeNoticias) {
+    CartasDeNoticias.sort((a:any, b:any) => {
+        a = new Date (a.data.dateToSort);
+        b = new Date (b.data.dateToSort);
+        return a - b;
+    })
+
+    CartasDeNoticias.reverse()
+}
 
 
 ---
@@ -116,11 +139,11 @@ if (CartasAMostrar) {
 
     <section class="homepage_WelcomeSection">
         <Image class="section_Background section_Background_InnerShadow" src={minecraft_Wallpaper} alt='Imagen de fondo de la sección de bienvenida'></Image>
-        <section class="homepage_WelcomeSubSection_Padding">
-            <h2 class="section_Title">¡BIENVENIDO A RAMBLE!</h2>
+        <!-- <section class="homepage_WelcomeSubSection_Padding">
+           <h2 class="section_Title">¡BIENVENIDO A RAMBLE!</h2>
             <p class="section_Paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi et atque incidunt officia? Ipsa cum repellendus 
-                aliquid deserunt expedita ratione quas laudantium maiores laboriosam quod. Molestias earum quod aperiam fuga?</p>
-        </section>
+                aliquid deserunt expedita ratione quas laudantium maiores laboriosam quod. Molestias earum quod aperiam fuga?</p> 
+        </section> -->
     </section>
 
     <section class="center">
@@ -129,14 +152,23 @@ if (CartasAMostrar) {
         <p class="section_Paragraph center">¡Descubre las ultimas noticias y eventos de Ramble!</p>
         <div class="homepage_CardsContainer">
             {
-                CartasAMostrar.map((carta:any) => {
-                    return <Card Link={carta.link + carta.slug} Title={carta.data.title} Date={carta.data.date} ImgSRC={carta.data.img} Description={carta.data.description}></Card>
+                    CartasDEventos.map((carta:any) => {
+                        return <div class="section_Card_HomepageContainer">
+                        <Card Link={carta.link + carta.slug} Title={carta.data.title} Date={carta.data.date} ImgSRC={carta.data.img} Description={carta.data.description}></Card>
+                        <a href="/eventos"><button class="section_Button center">VER EVENTOS</button></a>
+                    </div>
+                    })
+            }
+
+            {
+                CartasDeNoticias.map((carta:any) => {
+                    return <div class="section_Card_HomepageContainer">
+                    <Card Link={carta.link + carta.slug} Title={carta.data.title} Date={carta.data.date} ImgSRC={carta.data.img} Description={carta.data.description}></Card>
+                    <a href="/noticias"><button class="section_Button center">VER NOTICIAS</button></a>
+                </div>
                 })
             }
         </div>
-        <a href=/eventos><button class="section_Button center">VER EVENTOS</button></a>
-        <a href="/noticias"><button class="section_Button center">VER NOTICIAS</button></a>
-
     </section>
 
     <section class="homepage_TransitionSection">

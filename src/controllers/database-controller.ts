@@ -1,13 +1,21 @@
 import mysql2 from 'mysql2';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const TablaReportes = import.meta.env.SECRET_BD_REPORTES_TABLA
 
+
+console.log("EL NOMBRE DEL USUARIO ES: " + import.meta.env.SECRET_BD_REPORTES_USER)
+console.log("LA CONTRASEÑA ES: " + import.meta.env.SECRET_BD_REPORTES_PASSWORD)
+console.log("LA BD ES: " + import.meta.env.SECRET_BD_REPORTES_BD)
+console.log("LA TABLA ES: " + import.meta.env.SECRET_BD_REPORTES_TABLA)
+
+
 const con = mysql2.createConnection({
     host: '127.0.0.1',
-    user: import.meta.env.SECRET_BD_REPORTES_USER,
-    password: import.meta.env.SECRET_BD_REPORTES_PASSWORD,
-    database: import.meta.env.SECRET_BD_REPORTES_BD,
+    port: 3306,
+    user: import.meta.env.SECRET_BD_REPORTES_USER, // ramblem1_kevin
+    password: import.meta.env.SECRET_BD_REPORTES_PASSWORD, // W=^$.YsPW)nl
+    database: import.meta.env.SECRET_BD_REPORTES_BD, // ramblem1_reportes
 })
 
 export class Password {
@@ -27,7 +35,7 @@ export class Password {
     async ComparePassword (password:any, hashword:any) {
         const promise = new Promise((resolve, reject) => {
             bcrypt.compare(password, hashword, (error, passwordMatch)=> {
-                if (error) return reject(error);
+                if (error) return reject("¡Ha ocurrido un error al comparar las contraseñas!" + error);
                 if (passwordMatch) resolve(true);
                 if (!passwordMatch) resolve(false);
             })
@@ -57,7 +65,7 @@ export default class Database {
 
         const Reportes =  new Promise((resolve, reject) => {
             con.query(`SELECT * FROM ${TablaReportes}`, (error, results) => {
-                if (error) throw reject(error);
+                if (error) throw reject("¡Ha ocurrido un error al intentar recoger los reportes de la BD! \n" + error);
                 resolve(results)
             })
         })
@@ -73,7 +81,7 @@ export default class Database {
 
         const Reportes =  new Promise((resolve, reject) => {
             con.query(`SELECT * FROM ramblem1_usuarios WHERE usuario = "${usuario}"`, (error, results:any) => {
-                if (error) throw reject(error);
+                if (error) throw reject("¡Ha ocurrido un error al intentar conseguir el usuario de la BD! \n" + error);
                 if (results.length == 0) {
                     resolve (false)
                 }
@@ -89,16 +97,22 @@ export default class Database {
 
     async iniciarSesion (usuario:any, password:any) {
         const PasswordManager = new Password;
-
+        console.log("AQUI ESTA EL ERROR")
         con.connect((error)=> {
             if (error) return console.log("¡Fallo al conectarse! \n" + error)
         })
 
+        console.log("NO, AQUI")
+        console.log(password)
+        console.log(usuario)
         const Reportes =  new Promise((resolve, reject) => {
             con.query(`SELECT * FROM ramblem1_usuarios WHERE usuario = "${usuario}"`, (error, results:any) => {
-                if (error) throw reject(error);
+                if (error) throw reject("¡Fallo al intentar iniciar sesión! \n" + error);
+                console.log("NO, AQUI X2")
                 const PasswordMatch =  PasswordManager.ComparePassword(password, results[0].pass)
+                console.log("CHICO WEON")
                 PasswordMatch.then(result => resolve(result))
+                console.log("AHHHH")
             })
         })
 
@@ -114,7 +128,7 @@ export default class Database {
 
         reportes.forEach((reporteID:any)=> {
             con.query(`DELETE FROM ramblem1_reportesUsuarios WHERE reporte_id = ${reporteID}`, (error) => {
-                if (error) throw error;
+                if (error) throw console.log("¡Ha ocurrido un error al intentar eliminar los reportes! \n" + error);
             })
         })
     }

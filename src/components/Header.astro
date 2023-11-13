@@ -9,7 +9,7 @@ import ramble_logo from '../assets/ramble_logo.svg';
 const { Pagina } = Astro.props;
 ---
 
-<header class="mainHeader">
+<header class="mainHeader" data-astro-reload>
     <Image src={ramble_logo} alt={"Ramble logo"} class="mainHeader_Logo"> </Image> 
 
     <!--The button to open the menu for mobile users -->
@@ -25,32 +25,35 @@ const { Pagina } = Astro.props;
         <a href="/reportar" class=`nav_Link ${Pagina == 'reportar' ? 'nav_Link_Active' : 'nav_Link' }`>Reportar</a>
     </nav>
 
-    <button class="mainHeader_PlayButton" id="IPButton">IP</button>
+    <button class="mainHeader_PlayButton" id="IPButton">UNETE</button>
 </header>
 
 
 <script>
-    document.addEventListener("astro:page-load", ()=> {
-        console.log("PERO TIO")
-    function copiarIP() {
-        navigator.clipboard.writeText("ramblemc.com:4000")
-        window.alert("¡IP copiada correctamente!")
-    }
 
-    const IPButton:any | HTMLElement = document.getElementById("IPButton")
-    IPButton.addEventListener("click", copiarIP)
-    const OpenMobileMenuButton:any | HTMLElement = document.querySelector(".mainHeader_MobileButton");
-    const MainHeaderNav:any | HTMLElement = document.querySelector(".mainHeader_Nav");
+        function copiarIP() {
+            navigator.clipboard.writeText("ramblemc.com:4000")
+            window.alert("¡IP copiada correctamente!")
+        }
 
-    OpenMobileMenuButton?.addEventListener("click", ()=> { 
-        if (!MainHeaderNav?.classList.contains("mainHeader_Nav_MobileActive")){
-            OpenMobileMenuButton.classList.add("mainHeader_MobileButton_Active")
-            MainHeaderNav?.classList.add("mainHeader_Nav_MobileActive");
-        } 
-        else {
-            OpenMobileMenuButton.classList.remove("mainHeader_MobileButton_Active")
-            MainHeaderNav?.classList.remove("mainHeader_Nav_MobileActive");
-        } 
-    })
-    })
+        function MenuMovil () {
+            if (!MainHeaderNav?.classList.contains("mainHeader_Nav_MobileActive")){
+                OpenMobileMenuButton.classList.add("mainHeader_MobileButton_Active")
+                MainHeaderNav.classList.add("mainHeader_Nav_MobileActive");
+                console.log(MainHeaderNav.classList)
+            } 
+            else {
+                OpenMobileMenuButton.classList.remove("mainHeader_MobileButton_Active")
+                MainHeaderNav?.classList.remove("mainHeader_Nav_MobileActive");
+            } 
+        }
+
+        const IPButton:any | HTMLElement = document.getElementById("IPButton")
+        IPButton.addEventListener("click", copiarIP)
+        const OpenMobileMenuButton:any | HTMLElement = document.querySelector(".mainHeader_MobileButton");
+        const MainHeaderNav:any | HTMLElement = document.querySelector(".mainHeader_Nav");
+
+        console.log(OpenMobileMenuButton)
+        OpenMobileMenuButton.addEventListener("click", MenuMovil)
+
 </script>

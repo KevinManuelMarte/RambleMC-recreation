@@ -3,5 +3,5 @@ title: "Evento prs"
 date: "15 de febrero de 2023" 
 dateToSort: "2023-5-30"
 description: "ESTA ES UNA DESCRIPCION"
-img: "https://cdn.discordapp.com/attachments/768329192131526686/1169377820896678008/image.png ex=65552ef6&is=6542b9f6&hm=46df3992ed5e03fac793d6166f932f3176a1ece5a77a14011891ba91c7e1901c&"
+img: "https://cdn.discordapp.com/attachments/1170554574843678720/1170735571430289438/Screenshot_208.png?ex=655a1f77&is=6547aa77&hm=116b896f5fff61aa2889972041d53b99580995316516f9a19a7808766fa0b795&"
 ---

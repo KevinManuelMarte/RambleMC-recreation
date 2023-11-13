@@ -10,6 +10,7 @@ import {ViewTransitions} from 'astro:transitions'
 //Necessary componentes
 import Header from '../components/Header.astro';
 import Footer from "../components/Footer.astro";
+import Notification from '../components/Notification.astro';
 //Necessary componentes
 
 
@@ -46,14 +47,14 @@ import "./styles.scss";
 		<!--PROPIEDADES DE META TAGS PARA SEO -->
 
 
-		
 	</head>
 	<body>
 	<Header Pagina={Pagina}></Header>
 	<main>
-		<ViewTransitions />
 		<slot />
 	</main>
 	<Footer Pagina={Pagina}></Footer>
+
+	<Notification></Notification>
 	</body>
 </html>

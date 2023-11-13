@@ -33,6 +33,7 @@ if (Astro.request.method == "POST") {
         })
 
         ReportesIDsArray.pop();
+        console.log(`¡Los reportes ${ReportesIDsArray} han sido eliminados por ${Astro.cookies.get("Sesion")?.value}!`)
         database_controller.EliminarReportes(ReportesIDsArray)
 
     }
@@ -44,6 +45,7 @@ if (Astro.request.method == "POST") {
         })
 
         ReportesIDsArray.pop();
+        console.log(`¡Los reportes ${ReportesIDsArray} han sido aceptados por ${Astro.cookies.get("Sesion")?.value}!`)
         database_controller.AceptarReportes(ReportesIDsArray)
     }
 
@@ -54,6 +56,7 @@ if (Astro.request.method == "POST") {
         })
 
         ReportesIDsArray.pop();
+        console.log(`¡Los reportes ${ReportesIDsArray} han sido rechazados por ${Astro.cookies.get("Sesion")?.value}!`)
         database_controller.RechazarReportes(ReportesIDsArray)
     }
 }
@@ -133,8 +136,7 @@ const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
                         <span><b>Fecha: </b> {reporte.fecha}</span>
         
                         <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
-                        
-                    <br />
+
                 </div>
                 })
             }
@@ -153,8 +155,7 @@ const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
                         <span><b>Fecha: </b> {reporte.fecha}</span>
         
                         <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
-                        
-                    <br />
+
                 </div>
                 })
             }
@@ -173,8 +174,6 @@ const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
                         <span><b>Fecha: </b> {reporte.fecha}</span>
         
                         <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
-                        
-                    <br />
                 </div>
                 })
             }
@@ -193,8 +192,7 @@ const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
                         <span><b>Fecha: </b> {reporte.fecha}</span>
         
                         <button class="section_Button reportes_Card_Boton" style="max-width: 20%;">Seleccionar reporte</button>
-                        
-                    <br />
+
                 </div>
                 })
             }
@@ -202,6 +200,29 @@ const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
 </section>
 
 <script>
+
+    function weon (id:string | any, containerReports:HTMLCollection | undefined) {
+        if (containerReports != null) {
+            const ContainerReportsToArray = Array.from(containerReports);
+            const Filtered = ContainerReportsToArray.filter(reporte => reporte.id == id);
+            return Filtered[0]
+        }
+    }
+
+    function wooon (id:string | any, containerReports:HTMLCollection | undefined) {
+        if (containerReports != null) {
+            const ContainerReportsToArray = Array.from(containerReports);
+            const Filtered = ContainerReportsToArray.filter(reporte => reporte.id == id);
+
+            if (Filtered.length > 0) {
+                const LastElement = Filtered[0].lastElementChild;
+                if (Filtered[0].lastElementChild) {
+                    return Filtered[0].lastElementChild
+            }
+            }
+        }   
+    }
+
     window.addEventListener("beforeunload", ()=> {
         Astro.cookies.set("Sesion", "Loul")
     })
@@ -270,6 +291,15 @@ const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
             if (!reporte?.classList.contains("ReporteSeleccionado")) {
                 const reporte:any = boton.parentElement;
                 reporte.classList.add("ReporteSeleccionado")
+                weon(reporte.id, ContenedorReportesSinDecidir?.children)?.classList.add("ReporteSeleccionado");
+                weon(reporte.id, ContenedorDeTodosLosReportes?.children)?.classList.add("ReporteSeleccionado");
+                weon(reporte.id, ContenedorReportesRechazados?.children)?.classList.add("ReporteSeleccionado");
+                weon(reporte.id, ContenedorReportesAceptados?.children)?.classList.add("ReporteSeleccionado");
+
+                wooon(reporte.id, ContenedorReportesSinDecidir?.children)?.classList.add("botonSeleccionarContenedor_Activo");
+                wooon(reporte.id, ContenedorDeTodosLosReportes?.children)?.classList.add("botonSeleccionarContenedor_Activo");
+                wooon(reporte.id, ContenedorReportesRechazados?.children)?.classList.add("botonSeleccionarContenedor_Activo");
+                wooon(reporte.id, ContenedorReportesAceptados?.children)?.classList.add("botonSeleccionarContenedor_Activo");
                 boton.classList.add("botonSeleccionarContenedor_Activo")
 
                 ReportesSeleccionadosInput.forEach(input => {
@@ -281,6 +311,17 @@ const ReportesSinDecidir = ReportesObjetos.filter((reporte) => {
             else  if ((reporte?.classList.contains("ReporteSeleccionado"))){
                 const reporte:any = boton.parentElement;
 
+                weon(reporte.id, ContenedorReportesSinDecidir?.children)?.classList.remove("ReporteSeleccionado");
+                weon(reporte.id, ContenedorDeTodosLosReportes?.children)?.classList.remove("ReporteSeleccionado");
+                weon(reporte.id, ContenedorReportesRechazados?.children)?.classList.remove("ReporteSeleccionado");
+                weon(reporte.id, ContenedorReportesAceptados?.children)?.classList.remove("ReporteSeleccionado");
+
+
+                
+                // wooon(reporte.id, ContenedorReportesSinDecidir?.children)?.classList.remove("botonSeleccionarContenedor_Activo");
+                // wooon(reporte.id, ContenedorDeTodosLosReportes?.children)?.classList.remove("botonSeleccionarContenedor_Activo");
+                // wooon(reporte.id, ContenedorReportesRechazados?.children)?.classList.remove("botonSeleccionarContenedor_Activo");
+                // wooon(reporte.id, ContenedorReportesAceptados?.children)?.classList.remove("botonSeleccionarContenedor_Activo");
                 reporte.classList.remove("ReporteSeleccionado")
                 boton.classList.remove("botonSeleccionarContenedor_Activo")
                 ReportesSeleccionadosInput.forEach(input => {
